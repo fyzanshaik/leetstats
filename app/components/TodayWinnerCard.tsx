@@ -1,22 +1,23 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Trophy, Crown } from "lucide-react"
-import type { UserStats } from "../types/leetcode"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Trophy, Crown } from "lucide-react";
+import type { UserStats } from "../types/leetcode";
 
 interface TodayWinnerCardProps {
-  userStats: UserStats[]
+  userStats: UserStats[];
 }
 
 export default function TodayWinnerCard({ userStats }: TodayWinnerCardProps) {
   const todayWinner = userStats.reduce(
     (prev, current) =>
       prev.solvedToday > current.solvedToday ||
-      (prev.solvedToday === current.solvedToday && prev.username < current.username) // Tie-breaker: alphabetical
+      (prev.solvedToday === current.solvedToday &&
+        prev.username < current.username)
         ? prev
         : current,
-    { username: "No Data", solvedToday: 0 } as UserStats
+    { username: "No Data", solvedToday: 0 } as UserStats,
   );
 
   const getRankBadgeColor = (rankIndex: number) => {
@@ -50,7 +51,7 @@ export default function TodayWinnerCard({ userStats }: TodayWinnerCardProps) {
 
   const sortedUsersForLeaderboard = userStats
     .slice()
-    .sort((a, b) => b.solvedToday - a.solvedToday); // Sort by solved today, descending
+    .sort((a, b) => b.solvedToday - a.solvedToday);
 
   return (
     <Card className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-6 h-full flex flex-col">
@@ -60,8 +61,7 @@ export default function TodayWinnerCard({ userStats }: TodayWinnerCardProps) {
           Today&apos;s Champion
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow space-y-5"> {/* Adjusted space-y to 5 */}
-        {/* Winner Highlight as a prominent Badge-like element */}
+      <CardContent className="flex-grow space-y-5">
         <div className="relative text-center px-4 py-3 bg-primary/10 rounded-lg border border-primary/20 shadow-inner flex flex-col items-center justify-center">
           <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 bg-card border border-border/50 rounded-full flex items-center justify-center text-primary shadow-lg">
             <Trophy className="w-5 h-5" />
@@ -74,8 +74,8 @@ export default function TodayWinnerCard({ userStats }: TodayWinnerCardProps) {
             {todayWinner?.solvedToday || 0} problems solved today
           </p>
         </div>
-
-        <div className="space-y-3 pt-2"> {/* Added slight padding top for visual separation */}
+        <div className="space-y-3 pt-2">
+          {" "}
           <h4 className="text-sm font-semibold text-muted-foreground">
             Top Daily Solvers
           </h4>
@@ -89,8 +89,13 @@ export default function TodayWinnerCard({ userStats }: TodayWinnerCardProps) {
                   <span className="text-sm font-mono w-6 text-muted-foreground flex-shrink-0">
                     #{index + 1}
                   </span>
-                  <Badge className={getRankBadgeColor(index)} variant="secondary">
-                    <span className="text-base font-medium">{user.username}</span>
+                  <Badge
+                    className={getRankBadgeColor(index)}
+                    variant="secondary"
+                  >
+                    <span className="text-base font-medium">
+                      {user.username}
+                    </span>
                   </Badge>
                 </div>
                 <span className="text-base font-mono font-bold">

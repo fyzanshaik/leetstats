@@ -1,18 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, User, ExternalLink } from "lucide-react"
-import type { UserStats } from "../types/leetcode"
-import Image from "next/image"
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, User, ExternalLink } from "lucide-react";
+import type { UserStats } from "../types/leetcode";
+import Image from "next/image";
 
 interface UserProfileCardProps {
-  userStats: ReadonlyArray<UserStats>
+  userStats: ReadonlyArray<UserStats>;
 }
 
-export default function UserProfileCard({ userStats }: Readonly<UserProfileCardProps>) {
-  const [currentUserIndex, setCurrentUserIndex] = useState(0)
+export default function UserProfileCard({
+  userStats,
+}: Readonly<UserProfileCardProps>) {
+  const [currentUserIndex, setCurrentUserIndex] = useState(0);
 
   if (userStats.length === 0) {
     return (
@@ -21,23 +23,25 @@ export default function UserProfileCard({ userStats }: Readonly<UserProfileCardP
           No user data available.
         </CardContent>
       </Card>
-    )
+    );
   }
 
-  const currentUser = userStats[currentUserIndex]
-  const profile = currentUser.profile
+  const currentUser = userStats[currentUserIndex];
+  const profile = currentUser.profile;
 
   const nextUser = () => {
-    setCurrentUserIndex((prev) => (prev + 1) % userStats.length)
-  }
+    setCurrentUserIndex((prev) => (prev + 1) % userStats.length);
+  };
 
   const prevUser = () => {
-    setCurrentUserIndex((prev) => (prev - 1 + userStats.length) % userStats.length)
-  }
+    setCurrentUserIndex(
+      (prev) => (prev - 1 + userStats.length) % userStats.length,
+    );
+  };
 
   const getProgressPercentage = (solved: number, total: number) => {
-    return total > 0 ? Math.round((solved / total) * 100) : 0
-  }
+    return total > 0 ? Math.round((solved / total) * 100) : 0;
+  };
 
   return (
     <Card className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-6 h-full flex flex-col">
@@ -73,17 +77,20 @@ export default function UserProfileCard({ userStats }: Readonly<UserProfileCardP
         </div>
       </CardHeader>
       <CardContent className="flex-grow space-y-6">
-        <div className="flex items-center gap-4 border-b border-border/50 pb-4">
+        <div className="flex items-center gap-3 sm:gap-4 border-b border-border/50 pb-4">
           <Image
-            src={profile?.profile?.userAvatar ?? "/placeholder.svg?height=60&width=60"}
+            src={
+              profile?.profile?.userAvatar ??
+              "/placeholder.svg?height=60&width=60"
+            }
             alt={`${currentUser.username} avatar`}
             height={60}
             width={60}
             className="w-16 h-16 rounded-full border-2 border-primary/50 object-cover flex-shrink-0 shadow-md"
           />
-          <div className="flex-1 space-y-1">
+          <div className="flex-1 space-y-1 min-w-0">
             <div className="flex items-center gap-3">
-              <h3 className="text-xl font-bold text-foreground">
+              <h3 className="text-xl font-bold text-foreground truncate">
                 {currentUser.username}
               </h3>
               <a
@@ -97,21 +104,28 @@ export default function UserProfileCard({ userStats }: Readonly<UserProfileCardP
             </div>
             {profile?.profile?.ranking && (
               <p className="text-sm text-muted-foreground font-mono">
-                Global Rank: <span className="font-semibold text-foreground">#{profile.profile.ranking.toLocaleString()}</span>
+                Global Rank:{" "}
+                <span className="font-semibold text-foreground">
+                  #{profile.profile.ranking.toLocaleString()}
+                </span>
               </p>
             )}
           </div>
-          <div className="text-right flex-shrink-0">
-            <div className="text-3xl font-extrabold text-primary font-mono leading-tight">
+          <div className="text-right">
+            <div className="text-2xl sm:text-3xl font-extrabold text-primary font-mono leading-tight">
               {currentUser.totalSolved.toLocaleString()}
             </div>
-            <p className="text-sm text-muted-foreground mt-1">Total Solved</p>
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+              Total Solved
+            </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <div className="text-center">
-            <div className="text-sm text-green-400 font-semibold mb-2">Easy</div>
+            <div className="text-sm text-green-400 font-semibold mb-2">
+              Easy
+            </div>
             <div className="text-xl font-bold font-mono text-foreground">
               {currentUser.easySolved}/{currentUser.easyTotal}
             </div>
@@ -124,12 +138,18 @@ export default function UserProfileCard({ userStats }: Readonly<UserProfileCardP
               />
             </div>
             <div className="text-sm text-muted-foreground mt-2 font-mono">
-              {getProgressPercentage(currentUser.easySolved, currentUser.easyTotal)}%
+              {getProgressPercentage(
+                currentUser.easySolved,
+                currentUser.easyTotal,
+              )}
+              %
             </div>
           </div>
 
           <div className="text-center">
-            <div className="text-sm text-yellow-400 font-semibold mb-2">Medium</div>
+            <div className="text-sm text-yellow-400 font-semibold mb-2">
+              Medium
+            </div>
             <div className="text-xl font-bold font-mono text-foreground">
               {currentUser.mediumSolved}/{currentUser.mediumTotal}
             </div>
@@ -142,7 +162,11 @@ export default function UserProfileCard({ userStats }: Readonly<UserProfileCardP
               />
             </div>
             <div className="text-sm text-muted-foreground mt-2 font-mono">
-              {getProgressPercentage(currentUser.mediumSolved, currentUser.mediumTotal)}%
+              {getProgressPercentage(
+                currentUser.mediumSolved,
+                currentUser.mediumTotal,
+              )}
+              %
             </div>
           </div>
 
@@ -160,12 +184,15 @@ export default function UserProfileCard({ userStats }: Readonly<UserProfileCardP
               />
             </div>
             <div className="text-sm text-muted-foreground mt-2 font-mono">
-              {getProgressPercentage(currentUser.hardSolved, currentUser.hardTotal)}%
+              {getProgressPercentage(
+                currentUser.hardSolved,
+                currentUser.hardTotal,
+              )}
+              %
             </div>
           </div>
         </div>
 
-        {/* Activity Stats */}
         <div className="grid grid-cols-3 gap-5 pt-4 border-t border-border">
           <div className="text-center">
             <div className="text-2xl font-bold font-mono text-foreground">
@@ -188,5 +215,5 @@ export default function UserProfileCard({ userStats }: Readonly<UserProfileCardP
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
