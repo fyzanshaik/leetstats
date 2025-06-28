@@ -124,7 +124,7 @@ export interface UserCalendar {
       icon: string
     }
   }>
-  submissionCalendar: string // JSON string that needs parsing
+  submissionCalendar: string 
 }
 
 export interface RecentSubmission {
@@ -159,7 +159,6 @@ export interface UpcomingBadge {
   progress: number
 }
 
-// Update the UserStats interface to match the actual API response structure
 
 export interface QuestionCount {
   difficulty: string
@@ -184,7 +183,6 @@ export interface UserProblemsData {
   } | null
 }
 
-// Updated UserStats interface
 export interface UserStats {
   username: string
   totalSolved: number
@@ -205,7 +203,6 @@ export interface UserStats {
   profile: UserProfile | null
 }
 
-// GraphQL query interfaces
 export interface GraphQLQuery {
   query: string
   variables?: Record<string, any>
