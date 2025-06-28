@@ -7,8 +7,8 @@ export const size = {
 export const contentType = "image/png";
 export const runtime = "edge";
 
-export async function GET() {
-  const imageResponse = new ImageResponse(
+export default function Icon() {
+  return new ImageResponse(
     (
       <div
         style={{
@@ -34,6 +34,7 @@ export async function GET() {
             position: "relative",
           }}
         >
+          {/* Trophy Cup */}
           <div
             style={{
               width: "70px",
@@ -50,6 +51,7 @@ export async function GET() {
               border: "2px solid rgba(255,255,255,0.1)",
             }}
           >
+            {/* Trophy handles */}
             <div
               style={{
                 position: "absolute",
@@ -74,6 +76,8 @@ export async function GET() {
                 boxShadow: "0 4px 12px rgba(255, 20, 147, 0.3)",
               }}
             />
+
+            {/* LS text */}
             <div
               style={{
                 color: "white",
@@ -88,6 +92,8 @@ export async function GET() {
               LS
             </div>
           </div>
+
+          {/* Trophy base */}
           <div
             style={{
               position: "absolute",
@@ -110,6 +116,34 @@ export async function GET() {
               boxShadow: "0 4px 12px rgba(255, 20, 147, 0.3)",
             }}
           />
+
+          {/* Stats dots */}
+          <div
+            style={{
+              position: "absolute",
+              top: "16px",
+              right: "16px",
+              width: "16px",
+              height: "16px",
+              background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+              borderRadius: "50%",
+              boxShadow: "0 4px 12px rgba(251, 191, 36, 0.5)",
+              border: "2px solid rgba(255,255,255,0.2)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "32px",
+              right: "32px",
+              width: "12px",
+              height: "12px",
+              background: "linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)",
+              borderRadius: "50%",
+              boxShadow: "0 4px 12px rgba(139, 92, 246, 0.5)",
+              border: "2px solid rgba(255,255,255,0.2)",
+            }}
+          />
         </div>
       </div>
     ),
@@ -117,15 +151,4 @@ export async function GET() {
       ...size,
     },
   );
-
-  imageResponse.headers.set(
-    "Cache-Control",
-    "public, max-age=86400, must-revalidate",
-  );
-
-  return imageResponse;
-}
-
-export default function Icon() {
-  return null;
 }
