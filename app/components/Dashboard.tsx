@@ -1,215 +1,210 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useCallback } from "react"
-import { Button } from "@/components/ui/button"
-import { Settings, Code2, Users, Trophy, TrendingUp, Clock, User } from "lucide-react"
-import RecentSubmissions from "./RecentSubmissions"
-import SettingsModal from "./SettingsModal"
-import UserProfileCard from "./UserProfileCard"
-import { fetchUserStats } from "../actions/leetcode"
-import type { UserStats } from "../types/leetcode"
-import TodayWinnerCard from "./TodayWinnerCard"
-import WeeklyMonthlyCard from "./WeeklyMonthlyCard"
-import Footer from "./Footer"
+import { useState, useEffect, useCallback } from "react";
+import {
+  Settings,
+  Code2,
+  Users,
+  Trophy,
+  TrendingUp,
+  Clock,
+  User,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import RecentSubmissions from "./RecentSubmissions";
+import SettingsModal from "./SettingsModal";
+import UserProfileCard from "./UserProfileCard";
+import TodayWinnerCard from "./TodayWinnerCard";
+import WeeklyMonthlyCard from "./WeeklyMonthlyCard";
+import Footer from "./Footer";
+import { fetchUserStats } from "../actions/leetcode";
+import type { UserStats } from "../types/leetcode";
 
 interface DashboardProps {
-  usernames: string[]
-  groupName: string
-  onUpdateUsernames: (usernames: string[]) => void
-  onOpenSetup: () => void
+  usernames: string[];
+  groupName: string;
+  onUpdateUsernames: (usernames: string[]) => void;
+  onOpenSetup: () => void;
 }
 
-export default function Dashboard({ usernames, groupName, onUpdateUsernames, onOpenSetup }: DashboardProps) {
-  const [userStats, setUserStats] = useState<UserStats[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [showSettings, setShowSettings] = useState(false)
+export default function Dashboard({
+  usernames,
+  groupName,
+  onUpdateUsernames,
+  onOpenSetup,
+}: DashboardProps) {
+  const [userStats, setUserStats] = useState<UserStats[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
 
   const loadUserStats = useCallback(async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const stats = await fetchUserStats(usernames)
-      setUserStats(stats)
+      const stats = await fetchUserStats(usernames);
+      setUserStats(stats);
     } catch (error) {
-      console.error("Error loading user stats:", error)
+      console.error("Error loading user stats:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [usernames])
+  }, [usernames]);
 
   useEffect(() => {
-    loadUserStats()
-  }, [usernames, loadUserStats])
+    loadUserStats();
+  }, [usernames, loadUserStats]);
 
   const ContentWrapper = ({ children }: { children: React.ReactNode }) => (
-    <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4"> {}
+    <div className="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
       {children}
     </div>
-  )
+  );
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex flex-col">
-        {}
-        <header className="border-b border-border bg-card/30 backdrop-blur-sm shadow-md py-4"> {}
+      <div className="flex min-h-screen flex-col bg-background">
+        <header className="border-b border-border bg-card/30 py-3 backdrop-blur-sm shadow-md">
           <ContentWrapper>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3"> {}
-                <Code2 className="w-7 h-7 text-primary" /> {}
-                <div>
-                  <h1 className="text-2xl font-bold tracking-tight text-foreground">LeetStats</h1> {}
-                  <div className="flex items-center gap-2 text-base text-muted-foreground mt-0.5"> {}
-                    <Users className="w-4 h-4" /> {}
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-3">
+                <Code2 className="h-7 w-7 text-primary" />
+                <div className="min-w-0">
+                  <h1 className="truncate text-2xl font-bold tracking-tight text-foreground">
+                    LeetStats
+                  </h1>
+                  <div className="mt-0.5 flex items-center gap-2 text-base text-muted-foreground">
+                    <Users className="h-4 w-4" />
                     <span>Loading group data...</span>
                   </div>
                 </div>
               </div>
-              <div className="h-9 w-36 bg-muted rounded-md animate-pulse"></div> {}
+              <div className="h-9 w-full animate-pulse rounded-md bg-muted sm:w-36" />
             </div>
           </ContentWrapper>
         </header>
 
-        {}
         <main className="flex-grow">
-          <ContentWrapper> {}
-            {}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="metric-card bg-muted/20 p-6 rounded-lg shadow-sm animate-pulse">
-                  <div className="h-6 bg-muted rounded w-3/4 mb-3"></div>
-                  <div className="h-10 bg-muted rounded w-1/2"></div>
+          <ContentWrapper>
+            <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="animate-pulse rounded-lg bg-muted/20 p-6 shadow-sm"
+                >
+                  <div className="mb-3 h-6 w-3/4 rounded bg-muted" />
+                  <div className="h-10 w-1/2 rounded bg-muted" />
                 </div>
               ))}
             </div>
-            {}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 stat-card bg-muted/20 p-8 rounded-lg shadow-sm animate-pulse">
-                <div className="h-8 bg-muted rounded w-1/4 mb-6"></div>
-                <div className="h-64 bg-muted rounded"></div>
+
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+              <div className="animate-pulse rounded-lg bg-muted/20 p-8 shadow-sm lg:col-span-2">
+                <div className="mb-6 h-8 w-1/4 rounded bg-muted" />
+                <div className="h-64 rounded bg-muted" />
               </div>
-              <div className="stat-card bg-muted/20 p-8 rounded-lg shadow-sm animate-pulse">
-                <div className="h-8 bg-muted rounded w-1/3 mb-6"></div>
-                <div className="space-y-4">
-                  {[...Array(4)].map((_, i) => (
-                    <div key={i} className="h-16 bg-muted rounded"></div>
-                  ))}
-                </div>
+              <div className="animate-pulse space-y-4 rounded-lg bg-muted/20 p-8 shadow-sm">
+                <div className="mb-6 h-8 w-1/3 rounded bg-muted" />
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="h-16 rounded bg-muted" />
+                ))}
               </div>
             </div>
           </ContentWrapper>
         </main>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      
-      <header className="border-b border-border bg-gradient-to-r from-card/70 to-card/50 backdrop-blur-md shadow-lg py-4"> 
+    <div className="flex min-h-screen flex-col bg-background">
+      <header className="border-b border-border bg-gradient-to-r from-card/70 to-card/50 py-3 backdrop-blur-md shadow-lg">
         <ContentWrapper>
-          <div className="flex items-center justify-between"> 
-            
-            <div className="flex items-center gap-3"> 
-              <Code2 className="w-7 h-7 text-primary" /> 
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight text-foreground">LeetStats</h1> {}
-                <div className="flex items-center gap-2 text-base text-muted-foreground mt-0.5"> {}
-                  <Users className="w-4 h-4" /> {}
-                  <span className="font-semibold text-foreground/90">{groupName}</span>
-                  <span className="text-muted-foreground">•</span>
-                  <span className="text-muted-foreground">{usernames.length} Members</span>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <Code2 className="h-7 w-7 text-primary" />
+              <div className="min-w-0">
+                <h1 className="truncate text-2xl font-bold tracking-tight text-foreground">
+                  LeetStats
+                </h1>
+                <div className="mt-0.5 flex flex-wrap items-center gap-2 text-base text-muted-foreground">
+                  <Users className="h-4 w-4" />
+                  <span className="font-semibold text-foreground/90">
+                    {groupName}
+                  </span>
+                  <span className="hidden sm:inline">•</span>
+                  <span className="sm:truncate">
+                    {usernames.length} Members
+                  </span>
                 </div>
               </div>
             </div>
-            
+
             <Button
               onClick={() => setShowSettings(true)}
               variant="outline"
-              size="default" 
-              className="border-border hover:bg-accent px-4 py-2 text-sm rounded-md shadow-sm" 
+              size="default"
+              className="w-full rounded-md border-border px-4 py-2 text-sm shadow-sm hover:bg-accent sm:w-auto"
             >
-              <Settings className="w-4 h-4 mr-2" /> 
+              <Settings className="mr-2 h-4 w-4" />
               Group Settings
             </Button>
           </div>
         </ContentWrapper>
       </header>
 
-      
       <main className="flex-grow">
         <ContentWrapper>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="metric-card bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-6 shadow-md">
+          <div className="mb-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-lg border border-border/50 bg-card/50 p-6 shadow-md backdrop-blur-sm">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Trophy className="w-6 h-6 text-primary" />
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/20">
+                  <Trophy className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Today&apos;s Leader</p>
-                  <p className="text-xl font-bold text-foreground mt-1">
-                    {userStats.reduce((prev, current) => (prev.solvedToday > current.solvedToday ? prev : current))
-                      ?.username || "N/A"}
+                  <p className="text-sm text-muted-foreground">
+                    Today&apos;s Leader
+                  </p>
+                  <p className="mt-1 text-xl font-bold text-foreground">
+                    {
+                      userStats.reduce((a, b) =>
+                        a.solvedToday > b.solvedToday ? a : b,
+                      )?.username
+                    }
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="metric-card bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-6 shadow-md">
+            <div className="rounded-lg border border-border/50 bg-card/50 p-6 shadow-md backdrop-blur-sm">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="w-6 h-6 text-primary" />
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/20">
+                  <Clock className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Solved</p>
-                  <p className="text-xl font-bold font-mono text-foreground mt-1">
-                    {userStats.reduce((sum, user) => sum + user.totalSolved, 0).toLocaleString()}
+                  <p className="text-sm text-muted-foreground">
+                    Today&apos;s Total
                   </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="metric-card bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-6 shadow-md">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Today&apos;s Total</p>
-                  <p className="text-xl font-bold font-mono text-foreground mt-1">
-                    {userStats.reduce((sum, user) => sum + user.solvedToday, 0)}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="metric-card bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-6 shadow-md">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <User className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Active Members</p>
-                  <p className="text-xl font-bold font-mono text-foreground mt-1">
-                    {userStats.filter((user) => user.solvedToday > 0).length}
+                  <p className="mt-1 font-mono text-xl font-bold text-foreground">
+                    {userStats.reduce((sum, u) => sum + u.solvedToday, 0)}
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div className="space-y-6 lg:col-span-2">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <TodayWinnerCard userStats={userStats} />
                 <WeeklyMonthlyCard userStats={userStats} />
               </div>
 
-              <div className="w-full flex justify-center"> 
-              <div className="max-w-4xl w-full"> 
-                 <UserProfileCard userStats={userStats} />
+              <div className="flex w-full justify-center">
+                <div className="w-full max-w-4xl">
+                  <UserProfileCard userStats={userStats} />
+                </div>
               </div>
-            </div>                 
             </div>
+
             <RecentSubmissions userStats={userStats} />
           </div>
         </ContentWrapper>
@@ -225,5 +220,5 @@ export default function Dashboard({ usernames, groupName, onUpdateUsernames, onO
       />
       <Footer />
     </div>
-  )
+  );
 }
