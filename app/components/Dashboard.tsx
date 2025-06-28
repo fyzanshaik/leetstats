@@ -45,6 +45,11 @@ export default function Dashboard({
     loadUserStats();
   }, [usernames, loadUserStats]);
 
+  const handleClearData = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
   const ContentWrapper = ({ children }: { children: React.ReactNode }) => (
     <div className="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
       {children}
@@ -206,6 +211,7 @@ export default function Dashboard({
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
         usernames={usernames}
+        onClearData={handleClearData}
         groupName={groupName}
         onUpdateUsernames={onUpdateUsernames}
         onOpenSetup={onOpenSetup}
