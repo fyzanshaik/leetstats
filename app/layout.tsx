@@ -20,6 +20,22 @@ const spaceMono = Space_Mono({
 export const metadata: Metadata = {
   title: "LeetStats - Coding Progress Dashboard",
   description: "Track your LeetCode progress with friends",
+  icons: {
+    icon: [
+      {
+        url: `/icon?v=${Date.now()}`,
+        sizes: "128x128",
+        type: "image/png",
+      },
+    ],
+    apple: [
+      {
+        url: `/apple-icon?v=${Date.now()}`,
+        sizes: "256x256",
+        type: "image/png",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

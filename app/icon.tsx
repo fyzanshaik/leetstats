@@ -5,9 +5,10 @@ export const size = {
   height: 128,
 };
 export const contentType = "image/png";
+export const runtime = "edge";
 
-export default function Icon() {
-  return new ImageResponse(
+export async function GET() {
+  const imageResponse = new ImageResponse(
     (
       <div
         style={{
@@ -73,7 +74,6 @@ export default function Icon() {
                 boxShadow: "0 4px 12px rgba(255, 20, 147, 0.3)",
               }}
             />
-
             <div
               style={{
                 color: "white",
@@ -88,7 +88,6 @@ export default function Icon() {
               LS
             </div>
           </div>
-
           <div
             style={{
               position: "absolute",
@@ -111,84 +110,6 @@ export default function Icon() {
               boxShadow: "0 4px 12px rgba(255, 20, 147, 0.3)",
             }}
           />
-
-          <div
-            style={{
-              position: "absolute",
-              top: "16px",
-              right: "16px",
-              width: "16px",
-              height: "16px",
-              background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
-              borderRadius: "50%",
-              boxShadow: "0 4px 12px rgba(251, 191, 36, 0.5)",
-              border: "2px solid rgba(255,255,255,0.2)",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              top: "32px",
-              right: "32px",
-              width: "12px",
-              height: "12px",
-              background: "linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)",
-              borderRadius: "50%",
-              boxShadow: "0 4px 12px rgba(139, 92, 246, 0.5)",
-              border: "2px solid rgba(255,255,255,0.2)",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: "48px",
-              left: "16px",
-              width: "10px",
-              height: "10px",
-              background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-              borderRadius: "50%",
-              boxShadow: "0 4px 12px rgba(16, 185, 129, 0.5)",
-              border: "2px solid rgba(255,255,255,0.2)",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              top: "48px",
-              left: "24px",
-              width: "8px",
-              height: "8px",
-              background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
-              borderRadius: "50%",
-              boxShadow: "0 4px 12px rgba(239, 68, 68, 0.5)",
-              border: "1px solid rgba(255,255,255,0.2)",
-            }}
-          />
-
-          <div
-            style={{
-              position: "absolute",
-              top: "24px",
-              left: "48px",
-              width: "4px",
-              height: "4px",
-              background: "#ffffff",
-              borderRadius: "50%",
-              opacity: 0.8,
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: "32px",
-              right: "48px",
-              width: "3px",
-              height: "3px",
-              background: "#ffffff",
-              borderRadius: "50%",
-              opacity: 0.6,
-            }}
-          />
         </div>
       </div>
     ),
@@ -196,4 +117,15 @@ export default function Icon() {
       ...size,
     },
   );
+
+  imageResponse.headers.set(
+    "Cache-Control",
+    "public, max-age=86400, must-revalidate",
+  );
+
+  return imageResponse;
+}
+
+export default function Icon() {
+  return null;
 }
