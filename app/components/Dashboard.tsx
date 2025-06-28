@@ -1,15 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import {
-  Settings,
-  Code2,
-  Users,
-  Trophy,
-  TrendingUp,
-  Clock,
-  User,
-} from "lucide-react";
+import { Settings, Code2, Users, Trophy, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RecentSubmissions from "./RecentSubmissions";
 import SettingsModal from "./SettingsModal";
