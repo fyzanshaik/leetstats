@@ -34,7 +34,6 @@ export default function Icon() {
             position: "relative",
           }}
         >
-          {/* Trophy Cup */}
           <div
             style={{
               width: "70px",
@@ -51,7 +50,6 @@ export default function Icon() {
               border: "2px solid rgba(255,255,255,0.1)",
             }}
           >
-            {/* Trophy handles */}
             <div
               style={{
                 position: "absolute",
@@ -77,7 +75,6 @@ export default function Icon() {
               }}
             />
 
-            {/* LS text */}
             <div
               style={{
                 color: "white",
@@ -93,7 +90,6 @@ export default function Icon() {
             </div>
           </div>
 
-          {/* Trophy base */}
           <div
             style={{
               position: "absolute",
@@ -117,7 +113,6 @@ export default function Icon() {
             }}
           />
 
-          {/* Stats dots */}
           <div
             style={{
               position: "absolute",

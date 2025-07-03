@@ -111,6 +111,16 @@ export default function Dashboard({
     );
   }
 
+  let leaderText = "No one solved (Try harder tomorrow!)";
+  if (userStats && userStats.length > 0) {
+    const leader = userStats.reduce((a, b) =>
+      a.solvedToday > b.solvedToday ? a : b,
+    );
+
+    if (leader.solvedToday > 0) {
+      leaderText = leader.username;
+    }
+  }
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header className="border-b border-border bg-gradient-to-r from-card/70 to-card/50 py-3 backdrop-blur-md shadow-lg">
@@ -161,16 +171,11 @@ export default function Dashboard({
                     Today&apos;s Leader
                   </p>
                   <p className="mt-1 text-xl font-bold text-foreground">
-                    {
-                      userStats.reduce((a, b) =>
-                        a.solvedToday > b.solvedToday ? a : b,
-                      )?.username
-                    }
+                    {leaderText}
                   </p>
                 </div>
               </div>
             </div>
-
             <div className="rounded-lg border border-border/50 bg-card/50 p-6 shadow-md backdrop-blur-sm">
               <div className="flex items-center gap-4">
                 <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/20">
