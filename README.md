@@ -16,5 +16,11 @@ _This is a milestone check for me while building this_
 - [ ] Verifying user's leetcode to be authentic
 - [ ] Share progress feature
 - [ ] Leetcode graph chart display for each user
+- [ ] Create landing page
+
+*Current tech debts*
+- [ ] Not using a state manager -> Using zustand
+- [ ] Nextjs API usage for backend -> shift to a separate backend
+- [ ] No Auth setup -> Using better auth
 
 
